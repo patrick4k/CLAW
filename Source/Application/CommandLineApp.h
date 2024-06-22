@@ -39,13 +39,6 @@ namespace claw::apps
                 {
                     app.m_shouldEnd = true;
                 }
-            },
-            {
-                "debug",
-                [](CommandLineApp& app)
-                {
-                    util::console(app, "TODO: Debug");
-                }
             }
         };
     };
