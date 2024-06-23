@@ -41,9 +41,8 @@ namespace claw::util
             if (!m_ok)
             {
                 if (m_err)
-                    util::RuntimeException(*this, m_err.value());
-                else
-                    util::RuntimeException(*this, "Unknown error on Result::unwrap()");
+                    throw util::RuntimeException(*this, m_err.value());
+                throw util::RuntimeException(*this, "Unknown error on Result::unwrap()");
             }
             return m_ok.value();
         }
