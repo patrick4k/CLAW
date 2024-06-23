@@ -3,26 +3,26 @@
 #include <string>
 #include <optional>
 #include "Util.h"
+#include "RuntimeException.h"
 
 namespace claw::util
 {
     template<typename TOk, typename TErr = std::string>
     class Result
     {
-        using This = Result<TOk, TErr>;
     public:
         Result(TOk ok) : m_ok(ok) {}
         Result(TErr err) : m_err(err) {}
         
         template<class... TArgs>
-        static This success(TArgs... args)
+        static Result success(TArgs... args)
         {
             TOk ok{ args... };
             return Result{ std::move(ok) };
         }
 
         template<class... TArgs>
-        static This error(TArgs... args)
+        static Result error(TArgs... args)
         {
             TErr err{ args... };
             return Result{ std::move(err) };
@@ -41,9 +41,9 @@ namespace claw::util
             if (!m_ok)
             {
                 if (m_err)
-                    util::error(*this, m_err.value());
+                    util::RuntimeException(*this, m_err.value());
                 else
-                    util::error(*this, "Unknown error on Result::unwrap()");
+                    util::RuntimeException(*this, "Unknown error on Result::unwrap()");
             }
             return m_ok.value();
         }
@@ -62,6 +62,7 @@ namespace claw::util
         }
 
     private:
+        // TODO: Should be a union...
         std::optional<TOk> m_ok{};
         std::optional<TErr> m_err{};
     };

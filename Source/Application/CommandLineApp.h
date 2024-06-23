@@ -3,6 +3,7 @@
 #include "IApplication.h"
 #include "../Component/ComponentContainer.h"
 #include "../IO/AnalogAudioDevice.h"
+#include "../Util/Parser/CommandLineParser.h"
 
 namespace claw::apps
 {
@@ -38,6 +39,20 @@ namespace claw::apps
                 [](CommandLineApp& app)
                 {
                     app.m_shouldEnd = true;
+                }
+            },
+            {
+                "parse",
+                [](CommandLineApp& app)
+                {
+                    auto str = util::input(app, "Enter string: ");
+
+                    util::parser::CommandLineParser parser{};
+                    const auto& tokens = parser.parse(str).unwrap();
+                    for (const auto& token : tokens)
+                    {
+                        util::console(app, token->string());
+                    }
                 }
             }
         };

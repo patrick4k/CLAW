@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Source\Application\CommandLineApp.cpp" />
     <ClCompile Include="..\..\Source\IO\AnalogAudioDevice.cpp" />
+    <ClCompile Include="..\..\Source\IO\NoOpAudioProcessor.cpp" />
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\..\..\..\..\..\..\JUCE\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
@@ -2754,6 +2755,7 @@
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_extra.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_midi_ci.cpp"/>
+    <ClCompile Include="..\..\Source\Util\Parser\CommandLineParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\..\..\..\JUCE\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h"/>
@@ -4036,7 +4038,10 @@
     <ClInclude Include="..\..\Source\Component\StaticComponentContainer.h" />
     <ClInclude Include="..\..\Source\IO\AnalogAudioDevice.h" />
     <ClInclude Include="..\..\Source\IO\IAudioDevice.h" />
+    <ClInclude Include="..\..\Source\IO\NoOpAudioProcessor.h" />
     <ClInclude Include="..\..\Source\Util\IException.h" />
+    <ClInclude Include="..\..\Source\Util\Parser\CommandLineParser.h" />
+    <ClInclude Include="..\..\Source\Util\Parser\IParser.h" />
     <ClInclude Include="..\..\Source\Util\Result.h" />
     <ClInclude Include="..\..\Source\Util\RuntimeException.h" />
     <ClInclude Include="..\..\Source\Util\Util.h" />

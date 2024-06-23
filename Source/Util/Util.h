@@ -65,7 +65,7 @@ namespace claw::util
         console(args...);
         std::cout << "[INPUT] ";
         std::string in{};
-        std::cin >> in;
+        std::getline(std::cin, in);
         return in;
     }
     
