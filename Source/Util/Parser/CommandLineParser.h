@@ -3,7 +3,6 @@
 
 namespace claw::util::parser
 {
-
     class CommandLineToken : public IToken
     {
     public:

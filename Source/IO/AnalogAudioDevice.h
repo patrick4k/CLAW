@@ -22,3 +22,5 @@ namespace claw::io
         juce::AudioDeviceManager m_deviceManager{};
     };
 }
+
+ClawMSpecializeNameof(claw::io::AnalogAudioDevice, "AnalogAudioDevice")

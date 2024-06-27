@@ -58,3 +58,5 @@ namespace claw::apps
         };
     };
 }
+
+ClawMSpecializeNameof(claw::apps::CommandLineApp, "CommandLineApp")

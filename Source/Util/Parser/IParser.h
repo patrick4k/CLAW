@@ -8,7 +8,6 @@
 
 namespace claw::util::parser
 {
-
     class IToken
     {
     public:
@@ -29,3 +28,5 @@ namespace claw::util::parser
         
     };
 }
+
+ClawMSpecializeNameof(claw::util::parser::IParser::ParseResult, "ParserResult")

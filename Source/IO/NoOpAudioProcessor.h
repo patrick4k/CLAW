@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <JuceHeader.h>
+#include "../Util/Util.h"
 
 namespace claw::io
 {
@@ -24,3 +25,5 @@ namespace claw::io
         int m_bufferSize{ 0 };
     };
 }
+
+ClawMSpecializeNameof(claw::io::NoOpAudioProcessor, "NoOpAudioProcessor")

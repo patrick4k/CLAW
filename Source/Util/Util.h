@@ -2,6 +2,9 @@
 #include <iostream>
 #include <type_traits>
 
+// Use in global namespace, specialized nameof for custom sender identifiers in console
+#define ClawMSpecializeNameof(type, name) namespace claw::util { template<> inline std::string nameof<type>() { return name; } }
+
 namespace claw::util
 {
     template<typename T>
@@ -9,21 +12,26 @@ namespace claw::util
     {
         return typeid(T).name();
     }
+    namespace _private
+    {
+        struct _msgtype_log {};
+        struct _msg_type_error {};
+    }
+}
 
-    struct _msgtype_log {};
-    template<> inline std::string nameof<_msgtype_log>() { return "LOG"; }
+ClawMSpecializeNameof(claw::util::_private::_msgtype_log, "LOG")
+ClawMSpecializeNameof(claw::util::_private::_msg_type_error, "ERROR")
 
-    struct _msg_type_error {};
-    template<> inline std::string nameof<_msg_type_error>() { return "ERROR"; }
-
+namespace claw::util
+{
     template<typename TSender, typename T>
-    std::string msg(T arg)
+    std::string msg(const T& arg)
     {
         return { "[" + nameof<TSender>() + "] " + arg };
     }
     
     template<typename TSender, typename T>
-    std::string msg(const TSender&, T arg)
+    std::string msg(const TSender&, const T& arg)
     {
         return msg<TSender>(arg);
     }
@@ -31,7 +39,7 @@ namespace claw::util
     template<typename T>
     void console(const T& arg)
     {
-        std::cout << msg<_msgtype_log>(arg) << std::endl;
+        std::cout << msg<_private::_msgtype_log>(arg) << std::endl;
     }
     
     template<typename TSender, typename T>
@@ -43,11 +51,11 @@ namespace claw::util
     template<typename T>
     void error(const T& arg)
     {
-        std::cout << msg<_msg_type_error>(arg) << std::endl;
+        std::cout << msg<_private::_msg_type_error>(arg) << std::endl;
     }
 
     template<typename TSender, typename T>
-    void error(const TSender&, T arg)
+    void error(const TSender&, const T& arg)
     {
         error(msg<TSender>(arg));
     }
@@ -56,7 +64,8 @@ namespace claw::util
     void waitForEnter(const TArgs&... args)
     {
         console(args...);
-        std::cin.get();
+        std::string _;
+        std::getline(std::cin, _);
     }
 
     template<typename... TArgs>
@@ -74,5 +83,4 @@ namespace claw::util
 
     template<typename T, typename U, typename... Ts>
     struct is_in_pack<T, U, Ts...> : std::conditional_t<std::is_same_v<T, U>, std::true_type, is_in_pack<T, Ts...>> {};
-    
 }
