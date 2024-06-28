@@ -3,7 +3,8 @@
 #include "IAudioDevice.h"
 #include <JuceHeader.h>
 
-#include "NoOpAudioProcessor.h"
+#include "../AudioProcessor/NoOpAudioProcessor.h"
+#include "../AudioProcessor/BitCrusher.h"
 
 namespace claw::io
 {
@@ -18,7 +19,7 @@ namespace claw::io
         ~AnalogAudioDevice() override;
 
     private:
-        NoOpAudioProcessor m_processor{};
+        audio_processor::BitCrusher m_processor{};
         juce::AudioDeviceManager m_deviceManager{};
     };
 }

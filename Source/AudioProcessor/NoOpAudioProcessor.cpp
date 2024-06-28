@@ -1,22 +1,8 @@
 ﻿#include "NoOpAudioProcessor.h"
 #include "../Util/Util.h"
 
-namespace claw::io
+namespace claw::audio_processor
 {
-    void NoOpAudioProcessor::audioDeviceAboutToStart(juce::AudioIODevice* device)
-    {
-        m_device = device;
-        m_sampleRate = device->getCurrentSampleRate();
-        m_bufferSize = device->getCurrentBufferSizeSamples();
-        util::console(*this, std::string{} + "Audio device started: Sample Rate = " + std::to_string(m_sampleRate) + ", Buffer Size = " + std::to_string(m_bufferSize));
-    }
-
-    void NoOpAudioProcessor::audioDeviceStopped()
-    {
-        util::console(*this, "Audio device stopped");
-        m_device = nullptr;
-    }
-
     void NoOpAudioProcessor::audioDeviceIOCallbackWithContext(const float* const* inputChannelData, int numInputChannels,
         float* const* outputChannelData, int numOutputChannels, int numSamples,
         const juce::AudioIODeviceCallbackContext&)

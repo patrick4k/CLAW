@@ -1,17 +1,12 @@
 ﻿#pragma once
+#include "IAudioProcessor.h"
 
-#include <JuceHeader.h>
-#include "../Util/Util.h"
-
-namespace claw::io
+namespace claw::audio_processor
 {
-    class NoOpAudioProcessor : public juce::AudioIODeviceCallback
+    class BitCrusher : public IAudioProcessor
     {
     public:
-        void audioDeviceAboutToStart(juce::AudioIODevice* device) override;
-
-        void audioDeviceStopped() override;
-
+        
         void audioDeviceIOCallbackWithContext(const float* const* inputChannelData,
                                               int numInputChannels,
                                               float* const* outputChannelData,
@@ -20,10 +15,7 @@ namespace claw::io
                                               const juce::AudioIODeviceCallbackContext& context) override;
 
     private:
-        juce::AudioIODevice* m_device{ nullptr };
-        double m_sampleRate{ 0 };
-        int m_bufferSize{ 0 };
+        uint32_t m_bitDepth{ 8 };
+        int m_maxLevels{ (1 << m_bitDepth) - 1 };
     };
 }
-
-ClawMSpecializeNameof(claw::io::NoOpAudioProcessor, "NoOpAudioProcessor")
